@@ -4,21 +4,6 @@
 
 #define SAMPLE_RATE 30000
 
-
-typedef struct
-{
-	float left_phase;
-	float right_phase;
-}
-paTestData;
-
-float values[2] = { 0.0f, 1.0f };
-
-static paTestData data;
-
-static int curValueIndex = 0;
-static int samplesPerValue = 1;
-
 static AudioDrawingFramework audioFrameWork;
 
 
@@ -41,23 +26,6 @@ static int patestCallback(const void *inputBuffer, void *outputBuffer,
 
 	for (i = 0; i<framesPerBuffer; i++)
 	{
-		//*out++ = data->left_phase;  /* left */
-		//*out++ = data->right_phase;  /* right */
-
-
-		/*
-		if (curValueIndex++ == samplesPerValue) {
-			curValueIndex = 0;
-
-			data->left_phase = -data->left_phase;
-			data->right_phase = -data->right_phase;
-		}*/
-
-		//*out++ = values[curValueIndex % 2];  /* left */
-		//*out++ = values[curValueIndex % 2];  /* right */
-
-		//curValueIndex++;
-
 		AudioPosition audioPos = data->getNextSample();
 
 		*out++ = audioPos.x; // Left
@@ -73,9 +41,6 @@ int main(void) {
 	if (error != paNoError) {
 		return error;
 	}
-
-	data.left_phase = 0.5f;
-	data.right_phase = 0.5f;
 
 	// Create the AudioObject
 	AudioObject objTest;
@@ -115,19 +80,19 @@ int main(void) {
 	objTest.positions = new AudioPosition[objTest.numPositions];
 	// Fill in the positions
 
-	objTest.positions[0].interpolation = 20;
+	objTest.positions[0].interpolation = 100;
 	objTest.positions[0].x = -1.0f;
 	objTest.positions[0].y = -1.0f;
 
-	objTest.positions[1].interpolation = 20;
+	objTest.positions[1].interpolation = 100;
 	objTest.positions[1].x = 0;
 	objTest.positions[1].y = 1.0f;
 
-	objTest.positions[2].interpolation = 20;
+	objTest.positions[2].interpolation = 100;
 	objTest.positions[2].x = 1.0f;
 	objTest.positions[2].y = -1.0f;
 
-	objTest.positions[3].interpolation = 20;
+	objTest.positions[3].interpolation = 100;
 	objTest.positions[3].x = -1.0f;
 	objTest.positions[3].y = -1.0f;
 
@@ -145,7 +110,7 @@ int main(void) {
 
 
 	// Sleep for a bit (20 seconds)
-	Pa_Sleep(5 * 1000);
+	Pa_Sleep(300 * 1000);
 
 	// Stop stream
 	error = Pa_StopStream(audioStream);

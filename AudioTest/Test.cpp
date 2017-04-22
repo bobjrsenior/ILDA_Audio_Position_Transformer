@@ -53,23 +53,23 @@ int main(void) {
 	objTest.positions = new AudioPosition[objTest.numPositions];
 	// Fill in the positions
 
-	objTest.positions[0].interpolation = 20;
+	objTest.positions[0].interpolation = 0;
 	objTest.positions[0].x = -1.0f;
 	objTest.positions[0].y = -1.0f;
 
-	objTest.positions[1].interpolation = 20;
+	objTest.positions[1].interpolation = 0;
 	objTest.positions[1].x = -1.0f;
 	objTest.positions[1].y = 1.0f;
 
-	objTest.positions[2].interpolation = 20;
+	objTest.positions[2].interpolation = 0;
 	objTest.positions[2].x = 1.0f;
 	objTest.positions[2].y = 1.0f;
 
-	objTest.positions[3].interpolation = 20;
+	objTest.positions[3].interpolation = 0;
 	objTest.positions[3].x = 1.0f;
 	objTest.positions[3].y = -1.0f;
 
-	objTest.positions[4].interpolation = 20;
+	objTest.positions[4].interpolation = 0;
 	objTest.positions[4].x = -1.0f;
 	objTest.positions[4].y = -1.0f;
 
@@ -83,19 +83,19 @@ int main(void) {
 	objTest.positions = new AudioPosition[objTest.numPositions];
 	// Fill in the positions
 
-	objTest.positions[0].interpolation = 100;
+	objTest.positions[0].interpolation = 1;
 	objTest.positions[0].x = -1.0f;
 	objTest.positions[0].y = -1.0f;
 
-	objTest.positions[1].interpolation = 100;
+	objTest.positions[1].interpolation = 1;
 	objTest.positions[1].x = 0;
 	objTest.positions[1].y = 1.0f;
 
-	objTest.positions[2].interpolation = 100;
+	objTest.positions[2].interpolation = 1;
 	objTest.positions[2].x = 1.0f;
 	objTest.positions[2].y = -1.0f;
 
-	objTest.positions[3].interpolation = 100;
+	objTest.positions[3].interpolation = 1;
 	objTest.positions[3].x = -1.0f;
 	objTest.positions[3].y = -1.0f;
 

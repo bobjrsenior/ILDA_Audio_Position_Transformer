@@ -85,9 +85,20 @@ public:
 				// Get the AudioPosition
 				AudioPosition audioPos = curObj.positions[objectSampleIndex];
 
+				AudioPosition nextAudioPos = audioPos;
+				if (objectSampleIndex + 1 < curObj.numPositions) {
+					nextAudioPos = curObj.positions[objectSampleIndex + 1];
+				}
+
 				// If not currently transitioning 
 				if (transitionCounter == -1) {
 					transitionCounter = positionSampleCount;
+				}
+
+				// Interpolate positions
+				if (audioPos.interpolation) {
+					audioPos.x = (audioPos.x * ((float)transitionCounter / positionSampleCount)) + (nextAudioPos.x * (1.0f - ((float)transitionCounter / positionSampleCount)));
+					audioPos.y = (audioPos.y * ((float)transitionCounter / positionSampleCount)) + (nextAudioPos.y * (1.0f - ((float)transitionCounter / positionSampleCount)));
 				}
 
 				transitionCounter--;
@@ -109,6 +120,7 @@ public:
 						}
 					}
 				}
+
 				return audioPos;
 			}
 		}

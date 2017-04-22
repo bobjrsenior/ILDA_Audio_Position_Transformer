@@ -22,15 +22,16 @@ private:
 	AudioPosition zeroPosition;
 	int curAudioObject;
 	int objectSampleIndex;
+	int positionSampleCount;
 	int transitionCounter;
 
 public:
-	AudioDrawingFramework() : maxAudioObjects(10), numAudioObjects(0), curAudioObject(0), objectSampleIndex(0), transitionCounter(-1) {
+	AudioDrawingFramework() : maxAudioObjects(10), numAudioObjects(0), curAudioObject(0), objectSampleIndex(0), positionSampleCount(100), transitionCounter(-1) {
 		audioObjects = new AudioObject[maxAudioObjects];
 		zeroPosition = { 0, 0.0f, 0.0f };
 	}
 
-	AudioDrawingFramework(int maxAudioObjects) : maxAudioObjects(maxAudioObjects), numAudioObjects(0), curAudioObject(0), objectSampleIndex(0), transitionCounter(-1) {
+	AudioDrawingFramework(int maxAudioObjects) : maxAudioObjects(maxAudioObjects), numAudioObjects(0), curAudioObject(0), objectSampleIndex(0), positionSampleCount(100), transitionCounter(-1) {
 		audioObjects = new AudioObject[maxAudioObjects];
 		zeroPosition = { 0, 0.0f, 0.0f };
 	}
@@ -86,7 +87,7 @@ public:
 
 				// If not currently transitioning 
 				if (transitionCounter == -1) {
-					transitionCounter = audioPos.interpolation;
+					transitionCounter = positionSampleCount;
 				}
 
 				transitionCounter--;
@@ -112,5 +113,9 @@ public:
 			}
 		}
 		return zeroPosition;
+	}
+
+	void setTransition(int transition) {
+		positionSampleCount = transition;
 	}
 };

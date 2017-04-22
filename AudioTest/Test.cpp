@@ -6,6 +6,9 @@
 
 static AudioDrawingFramework audioFrameWork;
 
+static float xPos = 0;
+static float yPos = 0;
+
 
 /* This routine will be called by the PortAudio engine when audio is needed.
 It may called at interrupt level on some machines so don't do anything
@@ -28,8 +31,8 @@ static int patestCallback(const void *inputBuffer, void *outputBuffer,
 	{
 		AudioPosition audioPos = data->getNextSample();
 
-		*out++ = audioPos.x; // Left
-		*out++ = audioPos.y; // Right
+		*out++ = audioPos.y; // Left
+		*out++ = -audioPos.x; // Right
 
 	}
 	return 0;
@@ -44,7 +47,7 @@ int main(void) {
 
 	// Create the AudioObject
 	AudioObject objTest;
-	/*
+	
 	// Give it four positions
 	objTest.numPositions = 5;
 	objTest.positions = new AudioPosition[objTest.numPositions];
@@ -71,7 +74,7 @@ int main(void) {
 	objTest.positions[4].y = -1.0f;
 
 	audioFrameWork.addAudioObject(objTest);
-	*/
+	
 
 	// Next Audio Object
 
@@ -109,8 +112,20 @@ int main(void) {
 	}
 
 
-	// Sleep for a bit (20 seconds)
-	Pa_Sleep(300 * 1000);
+	// Sleep for a bit (5 seconds)
+	//Pa_Sleep(5 * 1000);
+
+	char input = 'q';
+
+	do {
+		std::cout << "Enter X Value ([-1,1]): ";
+		std::cin >> xPos;
+		std::cout << "Enter Y Value ([-1,1]): ";
+		std::cin >> yPos;
+		std::cout << "Press 'q' if you want to quit (anything other char to continue)";
+		std::cin >> input;
+
+	} while (input != 'q' && input != 'Q');
 
 	// Stop stream
 	error = Pa_StopStream(audioStream);

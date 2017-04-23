@@ -1,18 +1,23 @@
 #pragma once
 #include <stdlib.h>
 
-typedef struct {
+typedef struct AudioPosition {
 	int interpolation;
 	float x;
 	float y;
 
+	AudioPosition() : interpolation(0), x(0), y(0) {  }
 }AudioPosition;
 
-typedef struct {
+typedef struct AudioObject {
 	int numPositions;
 	AudioPosition *positions;
+	float xScale;
+	float yScale;
 	float xTranslation;
 	float yTranslation;
+
+	AudioObject() : numPositions(0), positions(NULL), xScale(1), yScale(1), xTranslation(0), yTranslation(0) {}
 }AudioObject;
 
 
@@ -126,6 +131,10 @@ public:
 						}
 					}
 				}
+
+				// Apply scaling
+				audioPos.x *= curObj.xScale;
+				audioPos.y *= curObj.yScale;
 
 				// Apply translations
 				audioPos.x += curObj.xTranslation;

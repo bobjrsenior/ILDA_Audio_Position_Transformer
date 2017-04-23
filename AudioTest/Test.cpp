@@ -13,7 +13,7 @@ static AudioDrawingFramework audioFrameWork;
 
 static float xPos = 0;
 static float yPos = 0;
-
+float speed = 0.1f;
 
 /* This routine will be called by the PortAudio engine when audio is needed.
 It may called at interrupt level on some machines so don't do anything
@@ -100,7 +100,7 @@ int main(void) {
 	int reticleIndex = audioFrameWork.addAudioObject(objTest);
 
 	Enemy reticle(&audioFrameWork, reticleIndex);
-	reticle.setSpeed(0.1f, 0.0f);
+	//reticle.setSpeed(0.1f, 0.0f);
 	// reticle.setXTranslate()
 
 
@@ -119,24 +119,27 @@ int main(void) {
         getyx(win,mouseY,mouseX);
 				mvprintw(0,0,"Mouse\t\tx:%d\ty:%d", mouseX, mouseY);
 				mvprintw(2,0,"Reticle\t\tx:%d\ty:%d", reticle.getXPosition(), reticle.getYPosition());
-				refresh();
-
-
 				char ch = getch();
+				mvprintw(3,0,"Char: %d", ch);
+				refresh();
 
         switch(ch)
         {
-            case KEY_LEFT:
-				reticle.setXTranslation(10);
+            case 4:
+				reticle.translateX(-speed);
+					mvprintw(4,0,"KeyLeft"); refresh();
                 break;
-            case KEY_RIGHT:
-				reticle.setXTranslation(-10);
+            case 5:
+				reticle.translateX(speed);
+				mvprintw(4,0,"KeyRight"); refresh();
                 break;
-            case KEY_UP:
-				reticle.setYTranslation(10);
+            case 3:
+				reticle.translateY(speed);
+				mvprintw(4,0,"KeyUp"); refresh();
                 break;
-            case KEY_DOWN:
-				reticle.setYTranslation(-10);
+            case 2:
+				reticle.translateY(-speed);
+				mvprintw(4,0,"KeyDown"); refresh();
                 break;
             case KEY_F(1):
                 exit(1);

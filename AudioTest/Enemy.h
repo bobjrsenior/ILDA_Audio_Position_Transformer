@@ -80,6 +80,22 @@ public:
 		obj->yTranslation = _yTranslation;
 	}
 
+	void translateX(float amount) {
+		AudioObject *obj = audioFramework->getAudioObject(index);
+		obj->xTranslation += amount;
+	}
+
+	void translateY(float amount) {
+		AudioObject *obj = audioFramework->getAudioObject(index);
+		obj->yTranslation += amount;
+	}
+
+	void translateXY(float xAmount, float yAmount) {
+		AudioObject *obj = audioFramework->getAudioObject(index);
+		obj->xTranslation += xAmount;
+		obj->yTranslation += yAmount;
+	}
+
 	float getRadius() {
 		return radius;
 	}

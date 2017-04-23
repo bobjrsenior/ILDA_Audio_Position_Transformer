@@ -104,4 +104,16 @@ public:
 		obj->yTranslation += ySpeed;
 	}
 
+	int isColliding(Enemy other) {
+		// Pythagorean Theroem
+		float xDistance = other.getXPosition() - getXPosition();
+		float yDistance = other.getYPosition() - getXPosition();
+		float maxDistanceSquared = getRadius() + other.getRadius();
+		maxDistanceSquared *= maxDistanceSquared;
+		if (xDistance * xDistance + yDistance * yDistance <= maxDistanceSquared) {
+			return 1;
+		}
+		return 0;
+	}
+
 };

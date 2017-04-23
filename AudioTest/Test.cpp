@@ -1,4 +1,5 @@
 #include <portaudio.h>
+#include "Enemy.h"
 #include "AudioObjects.h"
 #include <iostream>
 
@@ -47,7 +48,7 @@ int main(void) {
 
 	// Create the AudioObject
 	AudioObject objTest;
-	
+	/*
 	// Give it four positions
 	objTest.numPositions = 5;
 	objTest.positions = new AudioPosition[objTest.numPositions];
@@ -76,8 +77,8 @@ int main(void) {
 	objTest.positions[4].x = -1.0f;
 	objTest.positions[4].y = -1.0f;
 
-	audioFrameWork.addAudioObject(objTest);
-	
+	//audioFrameWork.addAudioObject(objTest);
+	*/
 
 	// Next Audio Object
 
@@ -104,7 +105,14 @@ int main(void) {
 	objTest.positions[3].x = -1.0f;
 	objTest.positions[3].y = -1.0f;
 
-	audioFrameWork.addAudioObject(objTest);
+	int index = audioFrameWork.addAudioObject(objTest);
+
+	Enemy testEnemy(&audioFrameWork, index);
+	testEnemy.setSpeed(0.1f, 0.0f);
+	//testEnemy.setScale(0.5f);
+	
+	//AudioObject testDigit = audioFrameWork.getDigit(4);
+	//audioFrameWork.addAudioObject(testDigit);
 
 	// Open audio stream
 	PaStream *audioStream;
@@ -116,21 +124,12 @@ int main(void) {
 		return error;
 	}
 
-
-	// Sleep for a bit (5 seconds)
-	//Pa_Sleep(5 * 1000);
-
-	char input = 'q';
-
-	do {
-		std::cout << "Enter X Value ([-1,1]): ";
-		std::cin >> xPos;
-		std::cout << "Enter Y Value ([-1,1]): ";
-		std::cin >> yPos;
-		std::cout << "Press 'q' if you want to quit (anything other char to continue)";
-		std::cin >> input;
-
-	} while (input != 'q' && input != 'Q');
+	int continueGame = 1;
+	// Game loop
+	while (continueGame) {
+		testEnemy.move();
+		Pa_Sleep(1 * 1000);
+	}
 
 	// Stop stream
 	error = Pa_StopStream(audioStream);

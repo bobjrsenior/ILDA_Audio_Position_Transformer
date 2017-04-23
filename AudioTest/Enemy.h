@@ -88,6 +88,16 @@ public:
 		return radius;
 	}
 
+	float getXPosition() {
+		AudioObject *obj = audioFramework->getAudioObject(index);
+		return obj->xTranslation;
+	}
+
+	float getYPosition() {
+		AudioObject *obj = audioFramework->getAudioObject(index);
+		return obj->yTranslation;
+	}
+
 	void move() {
 		AudioObject *obj = audioFramework->getAudioObject(index);
 		obj->xTranslation += xSpeed;

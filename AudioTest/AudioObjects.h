@@ -215,7 +215,7 @@ public:
 	}
 
 	AudioObject makeCircle(int points) {
-		return makeCircle(points, 0.1f);
+		return makeCircle(points, 1.0f);
 	}
 
 	AudioObject makeCircle(int points, float radius) {

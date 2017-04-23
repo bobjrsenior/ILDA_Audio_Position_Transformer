@@ -47,7 +47,7 @@ public:
 		delete[] audioObjects;
 	}
 
-	void addAudioObject(AudioObject obj) {
+	int addAudioObject(AudioObject obj) {
 		// If we need to grow
 		if (numAudioObjects == maxAudioObjects) {
 			// Allocate a larger buffer
@@ -69,10 +69,14 @@ public:
 			delete[] old;
 		}
 
+		int index = numAudioObjects;
+
 		// Add in new object
-		audioObjects[numAudioObjects] = obj;
+		audioObjects[index] = obj;
 		// Increment size
 		numAudioObjects++;
+
+		return index++;
 	}
 
 	AudioPosition getNextSample() {
@@ -123,9 +127,11 @@ public:
 					}
 				}
 
+				// Apply translations
 				audioPos.x += curObj.xTranslation;
 				audioPos.y += curObj.yTranslation;
 
+				// Clamping to [-1,1]
 				if (audioPos.x > 1.0f) {
 					audioPos.x = 1.0f;
 				}
@@ -148,5 +154,21 @@ public:
 
 	void setTransition(int transition) {
 		positionSampleCount = transition;
+	}
+
+	AudioObject * getAudioObject(int index) {
+		// Bounds test
+		if (((unsigned)index) < numAudioObjects) {
+			return &audioObjects[index];
+		}
+		return NULL;
+	}
+
+	AudioObject * operator[](int index) {
+		// Bounds test
+		if (((unsigned)index) < numAudioObjects) {
+			return &audioObjects[index];
+		}
+		return NULL;
 	}
 };

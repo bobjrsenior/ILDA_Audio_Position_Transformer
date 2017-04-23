@@ -75,7 +75,7 @@ int main(void) {
 	int mouseY;
 
 	AudioObject enemyTemplate = audioFrameWork.makeCircle(5, 0.2f);
-
+	enemyTemplate.temp = 0;
 	// Create the AudioObject
 	AudioObject objTest;
 
@@ -123,7 +123,7 @@ int main(void) {
 		if (error != paNoError) {
 			return error;
 		}
-
+		int x = 0;
 	while( true )
     {
         getyx(win,mouseY,mouseX);
@@ -156,7 +156,8 @@ int main(void) {
         }
 		int randomNumber = rand() % 100;
 		// Check if a new enemy should spawn
-		if (rand() % 100 <= spawnChance) {
+		if (rand() % 100 <= spawnChance && x < 30) {
+			x++;
 			AudioObject newEnemyObj(enemyTemplate);
 			int index = audioFrameWork.addAudioObject(newEnemyObj);
 			Enemy newEnemy(&audioFrameWork, index);

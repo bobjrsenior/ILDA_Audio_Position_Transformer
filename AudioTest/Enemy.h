@@ -25,6 +25,8 @@ public:
 		setRadius();
 	}
 
+	~Enemy() {}
+
 	void destroy() {
 		audioFramework->removeAudioObject(index);
 	}

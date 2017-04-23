@@ -9,6 +9,7 @@ struct AudioPosition {
 };
 
 struct AudioObject {
+	int temp;
 	int numPositions;
 	AudioPosition *positions;
 	float xScale;
@@ -16,8 +17,8 @@ struct AudioObject {
 	float xTranslation;
 	float yTranslation;
 
-	AudioObject() : numPositions(0), positions(NULL), xScale(1), yScale(1), xTranslation(0), yTranslation(0) {}
-	AudioObject(const AudioObject &other) : numPositions(other.numPositions), xScale(other.xScale), yScale(other.yScale), xTranslation(other.xTranslation), yTranslation(other.yTranslation) {
+	AudioObject() : temp(0), numPositions(0), positions(NULL), xScale(1), yScale(1), xTranslation(0), yTranslation(0) {}
+	AudioObject(const AudioObject &other) : temp(0), numPositions(other.numPositions), xScale(other.xScale), yScale(other.yScale), xTranslation(other.xTranslation), yTranslation(other.yTranslation) {
 		positions = new AudioPosition[numPositions];
 		for (int i = 0; i < numPositions; i++) {
 			positions[i] = other.positions[i];
@@ -25,10 +26,9 @@ struct AudioObject {
 	}
 
 	~AudioObject() {
-		if (numPositions != 0) {
-			numPositions = 0;
+		if (temp == 0 && numPositions != 0) {
 			delete[] positions;
-			positions = NULL;
+			numPositions = 0;
 		}
 	}
 };

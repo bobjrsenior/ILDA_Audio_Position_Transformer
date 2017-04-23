@@ -5,7 +5,6 @@
 
 #define PI 3.1415923f
 
-
 class AudioDrawingFramework {
 private:
 	int maxAudioObjects;
@@ -19,7 +18,7 @@ private:
 	AudioObject digits[10];
 
 public:
-	AudioDrawingFramework() : maxAudioObjects(10), numAudioObjects(0), curAudioObject(0), objectSampleIndex(0), positionSampleCount(100), transitionCounter(-1) {
+	AudioDrawingFramework() : maxAudioObjects(10000), numAudioObjects(0), curAudioObject(0), objectSampleIndex(0), positionSampleCount(100), transitionCounter(-1) {
 		audioObjects = new AudioObject[maxAudioObjects];
 		generateDigits();
 	}
@@ -37,6 +36,7 @@ public:
 	int addAudioObject(AudioObject obj) {
 		// If we need to grow
 		if (numAudioObjects == maxAudioObjects) {
+			return 1;
 			// Allocate a larger buffer
 			int newMaxSize = (int)(maxAudioObjects * 1.5f + 0.5f);
 			// Create links to new/old buffers
@@ -52,6 +52,7 @@ public:
 			audioObjects = temp;
 			// Set the new maxSize
 			maxAudioObjects = newMaxSize;
+			
 			// Deallocate the old buffer
 			delete[] old;
 		}
@@ -60,6 +61,7 @@ public:
 
 		// Add in new object
 		audioObjects[index] = obj;
+		obj.temp = 1;
 		// Increment size
 		numAudioObjects++;
 
@@ -81,6 +83,7 @@ public:
 		if (curAudioObject < numAudioObjects) {
 			// Get the AudioObject
 			AudioObject curObj = audioObjects[curAudioObject];
+			curObj.temp = 1;
 
 			// Will be false if object has no positions 
 			if (objectSampleIndex < curObj.numPositions) {
@@ -188,10 +191,11 @@ public:
 
 	AudioObject makeCircle(int points, float radius) {
 		AudioObject circle;
+		circle.temp = 1;
 		circle.xScale = radius;
 		circle.yScale = radius;
 		circle.numPositions = points + 1;
-		circle.positions = new AudioPosition[points];
+		circle.positions = new AudioPosition[circle.numPositions];
 
 		// The number of radians between each point
 		float deltaRadians = 2 * PI / points;

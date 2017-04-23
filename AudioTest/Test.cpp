@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
-#include <unistd.h>
 #include "Enemy.h"
 
 
@@ -126,20 +125,20 @@ int main(void) {
         switch(ch)
         {
             case 4:
-				reticle.translateX(-speed);
-					mvprintw(4,0,"KeyLeft"); refresh();
+								reticle.translateX(-speed);
+								mvprintw(4,0,"KeyLeft"); refresh();
                 break;
             case 5:
-				reticle.translateX(speed);
-				mvprintw(4,0,"KeyRight"); refresh();
+								reticle.translateX(speed);
+								mvprintw(4,0,"KeyRight"); refresh();
                 break;
             case 3:
-				reticle.translateY(speed);
-				mvprintw(4,0,"KeyUp"); refresh();
+								reticle.translateY(speed);
+								mvprintw(4,0,"KeyUp"); refresh();
                 break;
             case 2:
-				reticle.translateY(-speed);
-				mvprintw(4,0,"KeyDown"); refresh();
+								reticle.translateY(-speed);
+								mvprintw(4,0,"KeyDown"); refresh();
                 break;
             case KEY_F(1):
                 exit(1);

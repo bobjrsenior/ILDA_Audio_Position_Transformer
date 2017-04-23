@@ -1,6 +1,10 @@
 #include <portaudio.h>
 #include "AudioObjects.h"
 #include <iostream>
+#include <vector>
+#include <ncurses.h>
+#include <unistd.h>
+
 
 #define SAMPLE_RATE 30000
 
@@ -45,9 +49,25 @@ int main(void) {
 		return error;
 	}
 
+	//Setup NCurses
+	initscr();
+	cbreak();
+	noecho();
+	keypad(stdscr, TRUE);
+	WINDOW * win = newwin(30, 30, 0, 0);
+
+	mousemask(REPORT_MOUSE_POSITION, NULL);
+	
+	int mouseX;
+	int mouseY;
+
+
+
+
+
 	// Create the AudioObject
 	AudioObject objTest;
-	
+
 	// Give it four positions
 	objTest.numPositions = 5;
 	objTest.positions = new AudioPosition[objTest.numPositions];
@@ -76,35 +96,36 @@ int main(void) {
 	objTest.positions[4].x = -1.0f;
 	objTest.positions[4].y = -1.0f;
 
-	audioFrameWork.addAudioObject(objTest);
+	int reticleIndex = audioFrameWork.addAudioObject(objTest);
+
+
+	Enemy reticle(&audioFrameWork, reticleIndex);
+	reticle.setSpeed(0.1f, 0.0f);
+	reticle.setXTranslate()
 	
+	while( true ) 
+    {   
+        getyx(win,mouseY,mouseX);
+		mvprintw(0,0,"x:%d y:%d", mouseX, mouseY);
 
-	// Next Audio Object
-
-	// Give it four positions
-	objTest.numPositions = 4;
-	objTest.positions = new AudioPosition[objTest.numPositions];
-	objTest.xTranslation = 0.0f;
-	objTest.yTranslation = 0.0f;
-	// Fill in the positions
-
-	objTest.positions[0].interpolation = 1;
-	objTest.positions[0].x = -1.0f;
-	objTest.positions[0].y = -1.0f;
-
-	objTest.positions[1].interpolation = 1;
-	objTest.positions[1].x = 0;
-	objTest.positions[1].y = 1.0f;
-
-	objTest.positions[2].interpolation = 1;
-	objTest.positions[2].x = 1.0f;
-	objTest.positions[2].y = -1.0f;
-
-	objTest.positions[3].interpolation = 1;
-	objTest.positions[3].x = -1.0f;
-	objTest.positions[3].y = -1.0f;
-
-	audioFrameWork.addAudioObject(objTest);
+		char ch = getch();
+		mvprintw(1,1,"%d", ch); 
+		refresh();
+        switch(ch) 
+        {     
+            case KEY_LEFT:
+				reticle.setXTranslate(1,0);
+                break; 
+            case KEY_RIGHT:
+                break; 
+            case KEY_UP: 
+                break; 
+            case KEY_DOWN: 
+                break;     
+            case KEY_F(1): 
+                exit(1);
+        } 
+    }  
 
 	// Open audio stream
 	PaStream *audioStream;
@@ -123,11 +144,11 @@ int main(void) {
 	char input = 'q';
 
 	do {
-		std::cout << "Enter X Value ([-1,1]): ";
-		std::cin >> xPos;
-		std::cout << "Enter Y Value ([-1,1]): ";
-		std::cin >> yPos;
-		std::cout << "Press 'q' if you want to quit (anything other char to continue)";
+		// std::cout << "Enter X Value ([-1,1]): ";
+		// std::cin >> xPos;
+		// std::cout << "Enter Y Value ([-1,1]): ";
+		// std::cin >> yPos;
+		// std::cout << "Press 'q' if you want to quit (anything other char to continue)";
 		std::cin >> input;
 
 	} while (input != 'q' && input != 'Q');
@@ -149,5 +170,8 @@ int main(void) {
 	if (error != paNoError) {
 		return error;
 	}
+
+
+	endwin();
 	return 0;
 }

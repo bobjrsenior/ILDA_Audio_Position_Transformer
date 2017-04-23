@@ -1,1 +1,1 @@
-g++ -I include/ -lrt -lm -lasound -ljack -pthread -lportaudio Test.cpp -o portaudio
+g++ -I include/ -lrt -lm -lasound -ljack -pthread -lportaudio -lncurses -pthread Test.cpp -o portaudio

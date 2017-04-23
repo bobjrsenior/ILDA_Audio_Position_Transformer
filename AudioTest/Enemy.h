@@ -13,14 +13,10 @@ private:
 private:
 	void setRadius() {
 		AudioObject *obj = audioFramework->getAudioObject(index);
-		if (obj->numPositions > 0) {
-			radius = obj->positions[0].x * obj->xScale;
-		}
+		radius = obj->xScale;
 	}
 	void setRadius(AudioObject *obj) {
-		if (obj->numPositions > 0) {
-			radius = obj->positions[0].x * obj->xScale;
-		}
+		radius = obj->xScale;
 	}
 
 public:

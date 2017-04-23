@@ -51,11 +51,14 @@ int main(void) {
 	// Give it four positions
 	objTest.numPositions = 5;
 	objTest.positions = new AudioPosition[objTest.numPositions];
+	objTest.xTranslation = 0.0f;
+	objTest.yTranslation = 0.0f;
 	// Fill in the positions
 
 	objTest.positions[0].interpolation = 0;
 	objTest.positions[0].x = -1.0f;
 	objTest.positions[0].y = -1.0f;
+	
 
 	objTest.positions[1].interpolation = 0;
 	objTest.positions[1].x = -1.0f;
@@ -81,6 +84,8 @@ int main(void) {
 	// Give it four positions
 	objTest.numPositions = 4;
 	objTest.positions = new AudioPosition[objTest.numPositions];
+	objTest.xTranslation = 0.0f;
+	objTest.yTranslation = 0.0f;
 	// Fill in the positions
 
 	objTest.positions[0].interpolation = 1;

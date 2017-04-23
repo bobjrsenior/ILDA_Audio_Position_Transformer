@@ -11,6 +11,8 @@ typedef struct {
 typedef struct {
 	int numPositions;
 	AudioPosition *positions;
+	float xTranslation;
+	float yTranslation;
 }AudioObject;
 
 
@@ -119,6 +121,23 @@ public:
 							curAudioObject = 0;
 						}
 					}
+				}
+
+				audioPos.x += curObj.xTranslation;
+				audioPos.y += curObj.yTranslation;
+
+				if (audioPos.x > 1.0f) {
+					audioPos.x = 1.0f;
+				}
+				else if (audioPos.x < -1.0f) {
+					audioPos.x = -1.0f;
+				}
+
+				if (audioPos.y > 1.0f) {
+					audioPos.y = 1.0f;
+				}
+				else if (audioPos.y < -1.0f) {
+					audioPos.y = -1.0f;
 				}
 
 				return audioPos;

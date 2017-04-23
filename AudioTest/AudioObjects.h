@@ -30,23 +30,8 @@ public:
 	}
 
 	~AudioDrawingFramework() {
-		// Deallocate the digits
-		for (int i = 0; i < 10; i++) {
-			if (digits[i].numPositions != 0) {
-				delete[] digits[i].positions;
-			}
-		}
-
-		// Deallocate every AudioObject's Positions
-		for (int i = 0; i < numAudioObjects; i++) {
-			if (audioObjects[i].numPositions != 0) {
-				delete[] audioObjects[i].positions;
-			}
-		}
 		// Deallocate the AudioObjects
 		delete[] audioObjects;
-
-
 	}
 
 	int addAudioObject(AudioObject obj) {

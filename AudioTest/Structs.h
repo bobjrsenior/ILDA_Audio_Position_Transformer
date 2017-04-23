@@ -10,7 +10,7 @@ struct AudioPosition {
 
 struct AudioObject {
 	int temp;
-	int numPositions;
+	volatile int numPositions;
 	AudioPosition *positions;
 	float xScale;
 	float yScale;
@@ -29,6 +29,9 @@ struct AudioObject {
 		if (temp == 0 && numPositions != 0) {
 			delete[] positions;
 			numPositions = 0;
+		}
+		else {
+			int x = 5;
 		}
 	}
 };

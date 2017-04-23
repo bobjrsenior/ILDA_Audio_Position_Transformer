@@ -18,7 +18,7 @@ private:
 	AudioObject digits[10];
 
 public:
-	AudioDrawingFramework() : maxAudioObjects(10000), numAudioObjects(0), curAudioObject(0), objectSampleIndex(0), positionSampleCount(100), transitionCounter(-1) {
+	AudioDrawingFramework() : maxAudioObjects(10), numAudioObjects(0), curAudioObject(0), objectSampleIndex(0), positionSampleCount(100), transitionCounter(-1) {
 		audioObjects = new AudioObject[maxAudioObjects];
 		generateDigits();
 	}
@@ -36,16 +36,15 @@ public:
 	int addAudioObject(AudioObject obj) {
 		// If we need to grow
 		if (numAudioObjects == maxAudioObjects) {
-			return 1;
 			// Allocate a larger buffer
 			int newMaxSize = (int)(maxAudioObjects * 1.5f + 0.5f);
 			// Create links to new/old buffers
 			AudioObject *temp = new AudioObject[newMaxSize];
 			AudioObject *old = audioObjects;
 
-			// Copy old buffer data into the new buffer
-			for (int i = 0; i < maxAudioObjects; i++) {
+			for (int i = 0; i < numAudioObjects; i++) {
 				temp[i] = old[i];
+				old[i].temp = 1;
 			}
 
 			// Point audio array to the new buffer

@@ -1,27 +1,9 @@
 #pragma once
+#include "Structs.h"
 #include <stdlib.h>
 #include <math.h>
 
 #define PI 3.1415923f
-
-typedef struct AudioPosition {
-	int interpolation;
-	float x;
-	float y;
-
-	AudioPosition() : interpolation(1), x(0), y(0) {  }
-}AudioPosition;
-
-typedef struct AudioObject {
-	int numPositions;
-	AudioPosition *positions;
-	float xScale;
-	float yScale;
-	float xTranslation;
-	float yTranslation;
-
-	AudioObject() : numPositions(0), positions(NULL), xScale(1), yScale(1), xTranslation(0), yTranslation(0) {}
-}AudioObject;
 
 
 class AudioDrawingFramework {
@@ -97,6 +79,14 @@ public:
 		numAudioObjects++;
 
 		return index++;
+	}
+
+	void removeAudioObject(int index) {
+		// Bounds check
+		if ((unsigned) index < (unsigned) numAudioObjects){
+			audioObjects[index].numPositions = 0;
+			delete[] audioObjects[index].positions;
+		}
 	}
 
 	AudioPosition getNextSample() {
@@ -182,7 +172,7 @@ public:
 
 	AudioObject * getAudioObject(int index) {
 		// Bounds test
-		if (((unsigned)index) < (unsigned)numAudioObjects) {
+		if ((unsigned) index < (unsigned)numAudioObjects) {
 			return &audioObjects[index];
 		}
 		return NULL;
@@ -199,7 +189,7 @@ public:
 	AudioObject getDigit(int digit) {
 		AudioObject temp;
 		// Bounds check
-		if (((unsigned)digit) < (unsigned)10) {
+		if ((unsigned) digit < (unsigned) 10) {
 			// Copy data into the new AudioObject
 			temp = digits[digit];
 
@@ -223,14 +213,18 @@ public:
 		circle.numPositions = points + 1;
 		circle.positions = new AudioPosition[points];
 
+		// The number of radians between each point
 		float deltaRadians = 2 * PI / points;
+
+		// Current "position" on the circle
 		float radians = 0;
 
+		// Set circle positions
 		for (int i = 0; i < points; i++, radians += deltaRadians) {
 			circle.positions[i].x = cosf(radians) * radius;
 			circle.positions[i].y = sinf(radians) * radius;
 		}
-
+		// Set last point to the first to avoid errors
 		circle.positions[points].x = circle.positions[0].x;
 		circle.positions[points].y = circle.positions[0].y;
 

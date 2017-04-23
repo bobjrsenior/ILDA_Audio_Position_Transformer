@@ -158,7 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioObjects.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="KeyboardHandler.h" />
+    <ClInclude Include="Structs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

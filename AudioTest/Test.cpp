@@ -2,6 +2,7 @@
 #include "AudioObjects.h"
 #include <iostream>
 #include <vector>
+#include <time.h>
 #ifdef _WIN32
 #include <curses.h>
 #else
@@ -17,6 +18,8 @@ static AudioDrawingFramework audioFrameWork;
 static float xPos = 0;
 static float yPos = 0;
 float speed = 0.1f;
+// Out of 100
+int spawnChance = 20;
 
 /* This routine will be called by the PortAudio engine when audio is needed.
 It may called at interrupt level on some machines so don't do anything
@@ -47,11 +50,16 @@ static int patestCallback(const void *inputBuffer, void *outputBuffer,
 }
 
 int main(void) {
+	//Seed random
+	srand((unsigned int) time(NULL));
 	// Initialization
 	int error = Pa_Initialize();
 	if (error != paNoError) {
 		return error;
 	}
+
+	// Lists of objects
+	std::vector<Enemy> enemies;
 
 	//Setup NCurses
 	initscr();
@@ -65,9 +73,7 @@ int main(void) {
 	int mouseX;
 	int mouseY;
 
-
-
-
+	AudioObject enemyTemplate = audioFrameWork.makeCircle(5, 0.2f);
 
 	// Create the AudioObject
 	AudioObject objTest;
@@ -147,6 +153,27 @@ int main(void) {
             case KEY_F(1):
                 exit(1);
         }
+
+		// Check if a new enemy should spawn
+		if (rand() % 100 < spawnChance) {
+			AudioObject newEnemyObj(enemyTemplate);
+			int index = audioFrameWork.addAudioObject(newEnemyObj);
+			Enemy newEnemy(&audioFrameWork, index);
+			enemies.push_back(newEnemy);
+			newEnemy.setTranslation(2.0f, 2.0f);
+			newEnemy.setYSpeed(-0.01f);
+		}
+
+		// Cycle through each enemy
+		for (int i = 0; i < (int) enemies.size(); i++) {
+			Enemy enemy = enemies[i];
+			if (enemy.getYPosition() < -1.5f) {
+				enemy.move();
+				enemies.erase(enemies.begin() + i);
+				i--;
+				audioFrameWork.removeAudioObject(enemy.getIndex());
+			}
+		}
     }
 
 

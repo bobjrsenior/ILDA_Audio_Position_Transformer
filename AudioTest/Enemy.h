@@ -25,6 +25,10 @@ public:
 		setRadius();
 	}
 
+	int getIndex() {
+		return index;
+	}
+
 	void setXSpeed(float speed) {
 		xSpeed = speed;
 	}

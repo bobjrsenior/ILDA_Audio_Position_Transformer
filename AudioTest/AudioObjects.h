@@ -6,7 +6,7 @@ typedef struct AudioPosition {
 	float x;
 	float y;
 
-	AudioPosition() : interpolation(0), x(0), y(0) {  }
+	AudioPosition() : interpolation(1), x(0), y(0) {  }
 }AudioPosition;
 
 typedef struct AudioObject {
@@ -31,6 +31,7 @@ private:
 	int objectSampleIndex;
 	int positionSampleCount;
 	int transitionCounter;
+	AudioObject digits[10];
 
 public:
 	AudioDrawingFramework() : maxAudioObjects(10), numAudioObjects(0), curAudioObject(0), objectSampleIndex(0), positionSampleCount(100), transitionCounter(-1) {
@@ -179,5 +180,188 @@ public:
 			return &audioObjects[index];
 		}
 		return NULL;
+	}
+
+	AudioObject getDigit(int digit) {
+		AudioObject temp;
+		// Bounds check
+		if (((unsigned)digit) < 10) {
+			return digits[digit];
+		}
+		return temp;
+	}
+
+	private:
+
+	void generateDigits() {
+		int numPositions;
+		AudioPosition *positions;
+
+		// Digit 0
+		numPositions = 5;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = -0.1f;
+		positions[0].y = 0.2f;
+		positions[1].x = 0.1f;
+		positions[1].y = 0.2f;
+		positions[2].x = 0.0f;
+		positions[2].y = 0.0f;
+		positions[3].x = -0.1f;
+		positions[3].y = 0.0f;
+		positions[4].x = -0.1f;
+		positions[4].y = 0.2f;
+
+
+		// Digit 1
+		numPositions = 2;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = 0.0f;
+		positions[0].y = 0.2f;
+		positions[1].x = 0.0f;
+		positions[1].y = 0.0f;
+
+		// Digit 2
+		numPositions = 6;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = -0.1f;
+		positions[0].y = 0.2f;
+		positions[1].x = 0.0f;
+		positions[1].y = 0.2f;
+		positions[2].x = 0.0f;
+		positions[2].y = 0.1f;
+		positions[3].x = -0.1f;
+		positions[3].y = 0.1f;
+		positions[4].x = -0.1f;
+		positions[4].y = 0.0f;
+		positions[5].x = 0.0f;
+		positions[5].y = 0.0f;
+
+		// Digit 3
+		numPositions = 7;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = -0.1f;
+		positions[0].y = 0.2f;
+		positions[1].x = 0.0f;
+		positions[1].y = 0.2f;
+		positions[2].x = 0.0f;
+		positions[2].y = 0.1f;
+		positions[3].x = -0.1f;
+		positions[3].y = 0.1f;
+		positions[4].x = 0.0f;
+		positions[4].y = 0.1f;
+		positions[5].x = 0.0f;
+		positions[5].y = 0.0f;
+		positions[6].x = -0.1f;
+		positions[6].y = 0.0f;
+
+		// Digit 4
+		numPositions = 5;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = -0.1f;
+		positions[0].y = 0.2f;
+		positions[1].x = -0.1f;
+		positions[1].y = 0.1f;
+		positions[2].x = 0.0f;
+		positions[2].y = 0.1f;
+		positions[2].interpolation = 0;
+		positions[3].x = 0.0f;
+		positions[3].y = 0.2f;
+		positions[4].x = 0.0f;
+		positions[4].y = 0.0f;
+
+		// Digit 5
+		numPositions = 6;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = -0.1f;
+		positions[0].y = 0.2f;
+		positions[1].x = 0.0f;
+		positions[1].y = 0.2f;
+		positions[2].x = 0.0f;
+		positions[2].y = 0.1f;
+		positions[3].x = -0.1f;
+		positions[3].y = 0.1f;
+		positions[4].x = -0.1f;
+		positions[4].y = 0.0f;
+		positions[5].x = 0.0f;
+		positions[5].y = 0.0f;
+
+		// Digit 6
+		numPositions = 6;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = 0.0f;
+		positions[0].y = 0.2f;
+		positions[1].x = -0.1f;
+		positions[1].y = 0.2f;
+		positions[2].x = -0.1f;
+		positions[2].y = 0.0f;
+		positions[3].x = 0.0f;
+		positions[3].y = 0.0f;
+		positions[4].x = 0.0f;
+		positions[4].y = 0.1f;
+		positions[5].x = -0.1f;
+		positions[5].y = 0.1f;
+
+		// Digit 7
+		numPositions = 3;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = 0.0f;
+		positions[0].y = 0.2f;
+		positions[1].x = 0.0f;
+		positions[1].y = 0.2f;
+		positions[2].x = 0.0f;
+		positions[2].y = 0.0f;
+
+		// Digit 8
+		numPositions = 7;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = -0.1f;
+		positions[0].y = 0.2f;
+		positions[1].x = 0.0f;
+		positions[1].y = 0.2f;
+		positions[2].x = 0.0f;
+		positions[2].y = 0.0f;
+		positions[3].x = -0.1f;
+		positions[3].y = 0.0f;
+		positions[4].x = -0.1f;
+		positions[4].y = 0.2f;
+		positions[4].interpolation = 0;
+		positions[5].x = -0.1f;
+		positions[5].y = 0.1f;
+		positions[6].x = 0.0f;
+		positions[6].y = 0.1f;
+
+		// Digit 9
+		numPositions = 5;
+		digits[0].numPositions = numPositions;
+		digits[0].positions = new AudioPosition[numPositions];
+		positions = digits[0].positions;
+		positions[0].x = 0.0f;
+		positions[0].y = 0.1f;
+		positions[1].x = -0.1f;
+		positions[1].y = 0.1f;
+		positions[2].x = -0.1f;
+		positions[2].y = 0.2f;
+		positions[3].x = 0.0f;
+		positions[3].y = 0.2f;
+		positions[4].x = 0.0f;
+		positions[4].y = 0.0f;
 	}
 };

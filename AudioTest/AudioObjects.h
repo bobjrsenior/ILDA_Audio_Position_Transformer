@@ -210,6 +210,8 @@ public:
 
 	AudioObject makeCircle(int points, float radius) {
 		AudioObject circle;
+		circle.xScale = radius;
+		circle.yScale = radius;
 		circle.numPositions = points + 1;
 		circle.positions = new AudioPosition[points];
 
@@ -221,8 +223,8 @@ public:
 
 		// Set circle positions
 		for (int i = 0; i < points; i++, radians += deltaRadians) {
-			circle.positions[i].x = cosf(radians) * radius;
-			circle.positions[i].y = sinf(radians) * radius;
+			circle.positions[i].x = cosf(radians);
+			circle.positions[i].y = sinf(radians);
 		}
 		// Set last point to the first to avoid errors
 		circle.positions[points].x = circle.positions[0].x;

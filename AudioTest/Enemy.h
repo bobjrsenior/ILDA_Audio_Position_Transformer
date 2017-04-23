@@ -13,14 +13,10 @@ private:
 private:
 	void setRadius() {
 		AudioObject *obj = audioFramework->getAudioObject(index);
-		if (obj->numPositions > 0) {
-			radius = obj->positions[0].x * obj->xScale;
-		}
+		radius = obj->xScale;
 	}
 	void setRadius(AudioObject *obj) {
-		if (obj->numPositions > 0) {
-			radius = obj->positions[0].x * obj->xScale;
-		}
+		radius = obj->xScale;
 	}
 
 public:
@@ -102,6 +98,18 @@ public:
 		AudioObject *obj = audioFramework->getAudioObject(index);
 		obj->xTranslation += xSpeed;
 		obj->yTranslation += ySpeed;
+	}
+
+	int isColliding(Enemy other) {
+		// Pythagorean Theroem
+		float xDistance = other.getXPosition() - getXPosition();
+		float yDistance = other.getYPosition() - getXPosition();
+		float maxDistanceSquared = getRadius() + other.getRadius();
+		maxDistanceSquared *= maxDistanceSquared;
+		if (xDistance * xDistance + yDistance * yDistance <= maxDistanceSquared) {
+			return 1;
+		}
+		return 0;
 	}
 
 };

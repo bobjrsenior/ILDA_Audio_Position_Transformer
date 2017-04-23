@@ -4,6 +4,7 @@
 #include <vector>
 #include <ncurses.h>
 #include <unistd.h>
+#include "Enemy.h"
 
 
 #define SAMPLE_RATE 30000
@@ -57,7 +58,7 @@ int main(void) {
 	WINDOW * win = newwin(30, 30, 0, 0);
 
 	mousemask(REPORT_MOUSE_POSITION, NULL);
-	
+
 	int mouseX;
 	int mouseY;
 
@@ -78,7 +79,7 @@ int main(void) {
 	objTest.positions[0].interpolation = 0;
 	objTest.positions[0].x = -1.0f;
 	objTest.positions[0].y = -1.0f;
-	
+
 
 	objTest.positions[1].interpolation = 0;
 	objTest.positions[1].x = -1.0f;
@@ -98,60 +99,55 @@ int main(void) {
 
 	int reticleIndex = audioFrameWork.addAudioObject(objTest);
 
-
 	Enemy reticle(&audioFrameWork, reticleIndex);
 	reticle.setSpeed(0.1f, 0.0f);
-	reticle.setXTranslate()
-	
-	while( true ) 
-    {   
+	// reticle.setXTranslate()
+
+
+		// Open audio stream
+		PaStream *audioStream;
+		error = Pa_OpenDefaultStream(&audioStream, 0, 2, paFloat32, SAMPLE_RATE, 1, patestCallback, &audioFrameWork);
+
+		// Output to audio stream
+		error = Pa_StartStream(audioStream);
+		if (error != paNoError) {
+			return error;
+		}
+
+	while( true )
+    {
         getyx(win,mouseY,mouseX);
-		mvprintw(0,0,"x:%d y:%d", mouseX, mouseY);
+				mvprintw(0,0,"Mouse\t\tx:%d\ty:%d", mouseX, mouseY);
+				mvprintw(2,0,"Reticle\t\tx:%d\ty:%d", reticle.getXPosition(), reticle.getYPosition());
+				refresh();
 
-		char ch = getch();
-		mvprintw(1,1,"%d", ch); 
-		refresh();
-        switch(ch) 
-        {     
+
+				char ch = getch();
+
+        switch(ch)
+        {
             case KEY_LEFT:
-				reticle.setXTranslate(1,0);
-                break; 
+				reticle.setXTranslation(10);
+                break;
             case KEY_RIGHT:
-                break; 
-            case KEY_UP: 
-                break; 
-            case KEY_DOWN: 
-                break;     
-            case KEY_F(1): 
+				reticle.setXTranslation(-10);
+                break;
+            case KEY_UP:
+				reticle.setYTranslation(10);
+                break;
+            case KEY_DOWN:
+				reticle.setYTranslation(-10);
+                break;
+            case KEY_F(1):
                 exit(1);
-        } 
-    }  
+        }
+    }
 
-	// Open audio stream
-	PaStream *audioStream;
-	error = Pa_OpenDefaultStream(&audioStream, 0, 2, paFloat32, SAMPLE_RATE, 1, patestCallback, &audioFrameWork);
-	
-	// Output to audio stream
-	error = Pa_StartStream(audioStream);
-	if (error != paNoError) {
-		return error;
-	}
 
 
 	// Sleep for a bit (5 seconds)
 	//Pa_Sleep(5 * 1000);
 
-	char input = 'q';
-
-	do {
-		// std::cout << "Enter X Value ([-1,1]): ";
-		// std::cin >> xPos;
-		// std::cout << "Enter Y Value ([-1,1]): ";
-		// std::cin >> yPos;
-		// std::cout << "Press 'q' if you want to quit (anything other char to continue)";
-		std::cin >> input;
-
-	} while (input != 'q' && input != 'Q');
 
 	// Stop stream
 	error = Pa_StopStream(audioStream);

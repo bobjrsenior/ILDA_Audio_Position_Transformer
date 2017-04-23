@@ -2,7 +2,11 @@
 #include "AudioObjects.h"
 #include <iostream>
 #include <vector>
+#ifdef _WIN32
+#include <curses.h>
+#else
 #include <ncurses.h>
+#endif
 #include "Enemy.h"
 
 

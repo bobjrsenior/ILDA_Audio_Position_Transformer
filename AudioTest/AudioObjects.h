@@ -69,8 +69,10 @@ public:
 	void removeAudioObject(int index) {
 		// Bounds check
 		if ((unsigned) index < (unsigned) numAudioObjects){
-			audioObjects[index].numPositions = 0;
-			delete[] audioObjects[index].positions;
+			if (audioObjects[index].numPositions > 0) {
+				audioObjects[index].numPositions = 0;
+				delete[] audioObjects[index].positions;
+			}
 		}
 	}
 

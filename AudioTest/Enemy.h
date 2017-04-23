@@ -25,6 +25,10 @@ public:
 		setRadius();
 	}
 
+	void destroy() {
+		audioFramework->removeAudioObject(index);
+	}
+
 	int getIndex() {
 		return index;
 	}

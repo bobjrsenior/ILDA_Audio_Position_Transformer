@@ -6,7 +6,6 @@ struct AudioPosition {
 	float y;
 
 	AudioPosition() : interpolation(1), x(0), y(0) {  }
-	AudioPosition(const AudioPosition &other) : interpolation(other.interpolation), x(other.x), y(other.y) {}
 };
 
 struct AudioObject {
@@ -27,7 +26,9 @@ struct AudioObject {
 
 	~AudioObject() {
 		if (numPositions != 0) {
+			numPositions = 0;
 			delete[] positions;
+			positions = NULL;
 		}
 	}
 };

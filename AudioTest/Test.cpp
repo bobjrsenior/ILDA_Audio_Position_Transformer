@@ -19,7 +19,7 @@ static float xPos = 0;
 static float yPos = 0;
 float speed = 0.1f;
 // Out of 100
-int spawnChance = 20;
+int spawnChance = 1;
 
 /* This routine will be called by the PortAudio engine when audio is needed.
 It may called at interrupt level on some machines so don't do anything
@@ -65,6 +65,7 @@ int main(void) {
 	initscr();
 	cbreak();
 	noecho();
+	nodelay(stdscr, TRUE);
 	keypad(stdscr, TRUE);
 	WINDOW * win = newwin(30, 30, 0, 0);
 
@@ -153,9 +154,9 @@ int main(void) {
             case KEY_F(1):
                 exit(1);
         }
-
+		int randomNumber = rand() % 100;
 		// Check if a new enemy should spawn
-		if (rand() % 100 < spawnChance) {
+		if (rand() % 100 <= spawnChance) {
 			AudioObject newEnemyObj(enemyTemplate);
 			int index = audioFrameWork.addAudioObject(newEnemyObj);
 			Enemy newEnemy(&audioFrameWork, index);
@@ -169,11 +170,13 @@ int main(void) {
 			Enemy enemy = enemies[i];
 			enemy.move();
 			if (enemy.getYPosition() < -1.5f) {
+				enemy.destroy();
 				enemies.erase(enemies.begin() + i);
 				i--;
-				audioFrameWork.removeAudioObject(enemy.getIndex());
 			}
 		}
+
+		//Pa_Sleep(15);
     }
 
 

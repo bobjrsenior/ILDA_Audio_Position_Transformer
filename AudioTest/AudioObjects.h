@@ -190,16 +190,7 @@ public:
 		AudioObject temp;
 		// Bounds check
 		if ((unsigned) digit < (unsigned) 10) {
-			// Copy data into the new AudioObject
 			temp = digits[digit];
-
-			// Allocate new memory for this AudioObject's points
-			temp.positions = new AudioPosition[temp.numPositions];
-			// Copy points
-			for (int i = 0; i < temp.numPositions; i++) {
-				temp.positions[i] = digits[digit].positions[i];
-			}
-			return digits[digit];
 		}
 		return temp;
 	}

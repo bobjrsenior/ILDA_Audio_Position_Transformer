@@ -1,14 +1,15 @@
 #pragma once
 #include <stdlib.h>
-typedef struct AudioPositionStruct {
+typedef struct AudioPosition {
 	int interpolation;
 	float x;
 	float y;
 
-	AudioPositionStruct() : interpolation(1), x(0), y(0) {  }
+	AudioPosition() : interpolation(1), x(0), y(0) {  }
+	AudioPosition(const AudioPosition &other) : interpolation(other.interpolation), x(other.x), y(other.y) {}
 }AudioPosition;
 
-typedef struct AudioObjectStruct {
+typedef struct AudioObject {
 	int numPositions;
 	AudioPosition *positions;
 	float xScale;
@@ -16,5 +17,11 @@ typedef struct AudioObjectStruct {
 	float xTranslation;
 	float yTranslation;
 
-	AudioObjectStruct() : numPositions(0), positions(NULL), xScale(1), yScale(1), xTranslation(0), yTranslation(0) {}
+	AudioObject() : numPositions(0), positions(NULL), xScale(1), yScale(1), xTranslation(0), yTranslation(0) {}
+	AudioObject(const AudioObject &other) : numPositions(other.numPositions), xScale(other.xScale), yScale(other.yScale), xTranslation(other.xTranslation), yTranslation(other.yTranslation) {
+		positions = new AudioPosition[numPositions];
+		for (int i = 0; i < numPositions; i++) {
+			positions[i] = other.positions[i];
+		}
+	}
 }AudioObject;

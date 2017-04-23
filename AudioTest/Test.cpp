@@ -160,15 +160,15 @@ int main(void) {
 			int index = audioFrameWork.addAudioObject(newEnemyObj);
 			Enemy newEnemy(&audioFrameWork, index);
 			enemies.push_back(newEnemy);
-			newEnemy.setTranslation(2.0f, 2.0f);
+			newEnemy.setTranslation((rand() % 100) / 50.0f - 1.0f, 2.0f);
 			newEnemy.setYSpeed(-0.01f);
 		}
 
 		// Cycle through each enemy
 		for (int i = 0; i < (int) enemies.size(); i++) {
 			Enemy enemy = enemies[i];
+			enemy.move();
 			if (enemy.getYPosition() < -1.5f) {
-				enemy.move();
 				enemies.erase(enemies.begin() + i);
 				i--;
 				audioFrameWork.removeAudioObject(enemy.getIndex());
